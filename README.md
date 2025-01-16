@@ -232,6 +232,10 @@ All available overrides can be found by looking at `RemoteCommandController`.
 
 Make your `AudioItem`-subclass conform to `InitialTiming` to be able to start playback from a certain time.
 
+#### Enhance the AVPlayerWrapper
+
+
+
 ## Author
 
 Originally: Jørgen Henrichsen now extended by David Chavez and other contributors.
