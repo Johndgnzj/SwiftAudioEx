@@ -450,7 +450,7 @@ public class AudioPlayer: AVPlayerWrapperDelegate {
     }
 
     // MARK: - Set KeyProvider
-    func setKeyData(keyData: Data) {
+    public func setKeyData(keyData: Data) {
         keyProvider.setKey(key: keyData)
     }
 }
