@@ -13,6 +13,7 @@ public typealias AudioPlayerState = AVPlayerWrapperState
 public class AudioPlayer: AVPlayerWrapperDelegate {
     /// The wrapper around the underlying AVPlayer
     let wrapper: AVPlayerWrapperProtocol = AVPlayerWrapper()
+    let keyProvider: KeyProvider = KeyProvider()
 
     public let nowPlayingInfoController: NowPlayingInfoControllerProtocol
     public let remoteCommandController: RemoteCommandController
@@ -218,7 +219,8 @@ public class AudioPlayer: AVPlayerWrapperDelegate {
                 type: item.getSourceType(),
                 playWhenReady: self.playWhenReady,
                 initialTime: (item as? InitialTiming)?.getInitialTime(),
-                options:(item as? AssetOptionsProviding)?.getAssetOptions()
+                options:(item as? AssetOptionsProviding)?.getAssetOptions(),
+                resourceLoaderDelegate: keyProvider
             )
         }
     }
