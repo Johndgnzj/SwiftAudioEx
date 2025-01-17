@@ -13,12 +13,12 @@ public typealias AudioPlayerState = AVPlayerWrapperState
 public class AudioPlayer: AVPlayerWrapperDelegate {
     /// The wrapper around the underlying AVPlayer
     let wrapper: AVPlayerWrapperProtocol = AVPlayerWrapper()
-    let keyProvider: KeyProvider = KeyProvider()
 
     public let nowPlayingInfoController: NowPlayingInfoControllerProtocol
     public let remoteCommandController: RemoteCommandController
     public let event = EventHolder()
-
+    public let keyProvider: KeyProvider = KeyProvider()
+    
     private(set) var currentItem: AudioItem?
 
     /**
