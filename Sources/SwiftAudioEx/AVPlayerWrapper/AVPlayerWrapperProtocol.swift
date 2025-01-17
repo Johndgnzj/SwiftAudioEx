@@ -61,6 +61,8 @@ protocol AVPlayerWrapperProtocol: AnyObject {
     
     func load(from url: String, type: SourceType, playWhenReady: Bool, initialTime: TimeInterval?, options: [String: Any]?)
     
+    func load(from url: String, type: SourceType, playWhenReady: Bool, initialTime: TimeInterval?, options: [String: Any]?, resourceLoaderDelegate: AVAssetResourceLoaderDelegate?)
+    
     func unload()
     
     func reload(startFromCurrentTime: Bool)
