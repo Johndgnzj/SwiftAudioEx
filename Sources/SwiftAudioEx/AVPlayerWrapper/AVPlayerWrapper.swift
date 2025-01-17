@@ -349,7 +349,42 @@ class AVPlayerWrapper: AVPlayerWrapperProtocol {
             playbackFailed(error: AudioPlayerError.PlaybackError.invalidSourceUrl(url))
         }
     }
-
+    
+    func load(
+        from url: String,
+        type: SourceType = .stream,
+        playWhenReady: Bool = false,
+        initialTime: TimeInterval? = nil,
+        options: [String : Any]? = nil,
+        resourceLoaderDelegate: AVAssetResourceLoaderDelegate? = nil) {
+        if let itemUrl = type == .file
+            ? URL(fileURLWithPath: url)
+            : URL(string: url)
+        {
+            self.playWhenReady = playWhenReady
+            self.url = itemUrl
+            self.urlOptions = options
+            
+            if let delegate = resourceLoaderDelegate {
+                // 直接使用提供的 delegate 建立 asset
+                let asset = AVURLAsset(url: itemUrl, options: options)
+                asset.resourceLoader.setDelegate(delegate, queue: DispatchQueue.main)
+                self.asset = asset
+                
+                let item = AVPlayerItem(asset: asset)
+                self.item = item
+                item.preferredForwardBufferDuration = self.bufferDuration
+                self.avPlayer.replaceCurrentItem(with: item)
+                self.startObservingAVPlayer(item: item)
+                self.applyAVPlayerRate()
+            } else {
+                self.load()
+            }
+        } else {
+            clearCurrentItem()
+            playbackFailed(error: AudioPlayerError.PlaybackError.invalidSourceUrl(url))
+        }
+    }
     func unload() {
         clearCurrentItem()
         state = .idle
